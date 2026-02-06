@@ -85,6 +85,7 @@ model TutorProfile {
   bio         String?
   experience  Int?
   hourlyRate  Float
+  availability AvailabilitySlot[]
   isVerified  Boolean @default(false)
   user       User      @relation(fields: [userId], references: [id])
   categories TutorCategory[]
@@ -132,6 +133,20 @@ model Review {
   @@unique([studentId, tutorId]) 
 }
 
+model AvailabilitySlot {
+  id        String @id @default(uuid())
+
+  tutorId  String
+  dayOfWeek DayOfWeek
+
+  startTime DateTime
+  endTime   DateTime
+
+  tutor TutorProfile @relation(fields: [tutorId], references: [id])
+
+  @@index([tutorId, dayOfWeek])
+}
+
 
 enum Role {
   STUDENT
@@ -152,3 +167,12 @@ enum BookingStatus {
   CANCELLED
 }
 
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}

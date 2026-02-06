@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { toNodeHandler } from 'better-auth/node';
 import { auth } from './lib/auth';
 import router from './auth/authRoutes';
+import { isAuthenticated } from './middlewares/middleware';
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,7 @@ app.use(cors({
 
 
 app.all('/api/auth/*splat', toNodeHandler(auth));
-app.use('/api', router);
+app.use('/api', isAuthenticated, router);
 
 app.get('/', (req:Request, res:Response) => {
     res.json('SkillBridge Backend is running!');
