@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import dotenv from "dotenv";
 
+
 dotenv.config();
 
 export const auth = betterAuth({
@@ -12,9 +13,7 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET!,
   baseUrl: process.env.BETTER_AUTH_URL!,
 
-  trustedOrigins: [
-   process.env.BASE_URL || "http://localhost:5000",
-  ],
+  trustedOrigins: [process.env.BASE_URL || "http://localhost:5000"],
 
   emailAndPassword: {
     enabled: true,
@@ -36,5 +35,19 @@ export const auth = betterAuth({
     },
     expiresIn: 60 * 60 * 24 * 7,
   },
-  
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          if (user.role === "TUTOR") {
+            await prisma.tutorProfile.create({
+              data: {
+                userId: user.id,
+              },
+            });
+          }
+        },
+      },
+    },
+  },
 });
