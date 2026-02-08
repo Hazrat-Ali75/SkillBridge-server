@@ -137,10 +137,10 @@ model AvailabilitySlot {
   id        String @id @default(uuid())
 
   tutorId  String
-  dayOfWeek DayOfWeek
+  dayOfWeek DayOfWeek?
 
-  startTime DateTime
-  endTime   DateTime
+  startTime DateTime?
+  endTime   DateTime?
 
   tutor TutorProfile @relation(fields: [tutorId], references: [id])
 

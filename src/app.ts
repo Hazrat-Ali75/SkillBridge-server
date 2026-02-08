@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fromNodeHeaders, toNodeHandler } from 'better-auth/node';
 import { auth } from './lib/auth';
+import { tutorManagementRoutes } from './routes/tutorManagementRoutes';
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,8 @@ app.get("/api/me", async (req, res) => {
   });
   return res.json(session);
 });
+
+app.use('/api/tutor', tutorManagementRoutes);
 
 app.get('/', (req:Request, res:Response) => {
     res.json('SkillBridge Backend is running!');
