@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import dotenv from "dotenv";
+import { env } from "./env";
 
 
 dotenv.config();
@@ -10,10 +11,10 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
-    secret: process.env.BETTER_AUTH_SECRET!,
-    baseUrl: process.env.BETTER_AUTH_URL!,
+    secret: env.BETTER_AUTH_SECRET,
+    baseUrl: env.BETTER_AUTH_URL,
 
-    trustedOrigins: [process.env.BASE_URL || "http://localhost:8000"],
+    trustedOrigins: [env.BASE_URL],
 
     emailAndPassword: {
         enabled: true,
@@ -30,7 +31,7 @@ export const auth = betterAuth({
         cookieName: "skillbridge_session",
         options: {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: env.NODE_ENV === "production",
             sameSite: "strict",
         },
         expiresIn: 60 * 60 * 24 * 7,

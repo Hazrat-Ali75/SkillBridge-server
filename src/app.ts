@@ -2,12 +2,13 @@ import express from "express";
 import cors from "cors";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import { auth } from "./config/auth";
+import { env } from "./config/env";
 
 const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: process.env.BASE_URL || "http://localhost:8000",
+    origin: env.CORS_ORIGIN,
     credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
