@@ -26,7 +26,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   tutorProfile  TutorProfile?
-  bookings      Booking?
+  bookings      Booking[]
 
   @@map("user")
 }
@@ -82,8 +82,8 @@ model AvailabilitySlot {
 
 model Booking {
   id          String        @id @default(uuid())
-  studentId   String        @unique
-  tutorId     String        @unique
+  studentId   String
+  tutorId     String
   sessionDate DateTime
   duration    Int
   status      BookingStatus @default(PENDING)

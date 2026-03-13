@@ -5,7 +5,6 @@ import { prisma } from "../config/prisma";
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const betterAuthSessionToken = req.headers.cookie?.split('=')[1];
-        console.log(betterAuthSessionToken);
 
         if (!betterAuthSessionToken) {
             return res.status(401).json({

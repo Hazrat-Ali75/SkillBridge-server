@@ -2,8 +2,9 @@ import { Request, Response } from 'express'
 import { bookingService } from './booking.service'
 
 const createBookingController = async (req: Request, res: Response) => {
+    const { role } = req.user;
     try {
-        const result = await bookingService.createBookingService(req.body)
+        const result = await bookingService.createBookingService(req.body, role)
         res.status(201).json({
             success: true,
             message: "Booking created successfully",
