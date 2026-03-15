@@ -8,6 +8,7 @@ import { categoryRoutes } from "./modules/category/category.route";
 import { bookingRoutes } from "./modules/booking/booking.route";
 import { reviewRoute } from "./modules/review/review.route";
 import { adminRoutes } from "./modules/admin/admin.route";
+import { notFound } from "./middlewares/notFound";
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/reviews", reviewRoute);
 app.use("/api/admin", adminRoutes);
+
+app.use(notFound);
 
 app.get("/", (req, res) => {
     res.send("server is running");

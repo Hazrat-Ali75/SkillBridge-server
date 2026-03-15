@@ -1,4 +1,5 @@
 
+
 import { adminService } from "./admin.service";
 import { Request, Response } from "express";
 
@@ -31,7 +32,7 @@ const updateUserStatusController = async (req: Request, res: Response) => {
             data: user
         })
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return res.status(500).json({
             success: false,
             message: "Failed to update user status",

@@ -9,7 +9,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (!betterAuthSessionToken) {
             return res.status(401).json({
                 success: false,
-                message: "Unauthorized"
             })
         }
 
@@ -28,14 +27,12 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (!session) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid or expired session"
             })
         }
 
         if (session.user.status === "BANNED") {
             return res.status(401).json({
                 success: false,
-                message: "User is banned"
             })
         }
 
@@ -47,11 +44,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         };
         next()
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Failed to authenticate user",
-            error: error,
-        });
+        next(error);
     }
 }
